@@ -18,21 +18,21 @@
 
     table {
         width: 100%;
-        border: 1px solid #dddddd;
+        border: 1px solid black;
         border-spacing: 0px;
     }
 
     td,
     th {
-        border: 1px solid #dddddd;
+        border: 1px solid black;
         text-align: left;
         padding: 8px;
     }
 
-    tr:nth-child(even) {
+    /* tr:nth-child(even) {
         background-color: #dddddd;
         border: 1px solid white;
-    }
+    } */
 
     .title {
         text-align: center;
@@ -267,7 +267,7 @@
         <tr>
             <td colspan="2">
                 Recibí de la Tesorería Municipal de Villa El Paraíso, Departamento de Chalatenango, la cantidad de:
-                {{ $check->total_letters }} de los Estados Unidos de América ({{ $check->amount }}), en concepto
+                {{ $check->total_letters }} de los Estados Unidos de América (${{ $check->amount }}), en concepto
                 de {{ $check->concept }}, egreso que hace la tesorería Municipal de Villa de El Paraíso de la Cuenta
                 Corriente {{ $check->document_name }} No. {{ $check->account_number }}, {{ $check->name_bank }}
                 y descargado del Cifrado del

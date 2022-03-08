@@ -30,6 +30,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('api/document', DocumentController::class);
     // Route::resource('api/professor', ProfessorController::class);
     Route::resource('api/bank', BankController::class);
+    Route::get('api/check/summary', [CheckController::class, 'summary']);
     Route::resource('api/check', CheckController::class);
 
     Route::get('/', function () {
@@ -50,6 +51,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/reports', function () {
         return view('reports');
+    });
+
+    Route::get('/summary', function () {
+        return view('summary.index');
     });
 });
 

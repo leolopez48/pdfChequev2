@@ -14,7 +14,7 @@
         </tr>
         <tr v-for="(value, index) in data" :key="value.id">
           <td>{{ index + 1 }}</td>
-          <td>{{ value.name }}</td>
+          <td>{{ value.name_supplier }}</td>
           <td>{{ value.dui }}</td>
           <td>{{ value.nit }}</td>
           <td>{{ value.address }}</td>

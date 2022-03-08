@@ -8,26 +8,26 @@
           <div class="col-md-4 d-none">
             <input class="form-control" type="text" v-model="check.id" />
           </div>
-
-          <div class="col-md-4 pt-3">
-            <label>Código</label>
-            <input
-              class="form-control"
-              type="text"
-              v-model="check.check_name"
-            />
+          <div class="col-md-6 pt-3">
+            <label>Proveedor</label>
+            <select v-model="check.check_name" class="form-select">
+              <option
+                v-for="supplier in suppliers"
+                :key="supplier.id"
+                :value="supplier.name_supplier"
+              >
+                {{ supplier.name_supplier }}
+              </option>
+            </select>
           </div>
-          <div class="col-md-8 pt-3">
-            <label>Nombre</label>
-            <input
-              class="form-control"
-              type="text"
-              v-model="check.check_name"
-            />
-          </div>
-          <div class="col-md-4 pt-3">
+          <div class="col-md-6 pt-3">
             <label>Concepto</label>
-            <input class="form-control" type="text" v-model="check.concept" />
+            <textarea
+              cols="30"
+              rows="3"
+              class="form-control"
+              v-model="check.concept"
+            ></textarea>
           </div>
           <div class="col-md-4 pt-3">
             <label>Fecha</label>
@@ -74,6 +74,18 @@
               </option>
             </select>
           </div>
+          <div class="col-md-4 pt-3">
+            <label>Movimiento</label>
+            <select v-model="check.movement" class="form-select">
+              <option
+                v-for="(movement, index) in movements"
+                :key="index"
+                :value="movement"
+              >
+                {{ movement }}
+              </option>
+            </select>
+          </div>
 
           <div class="col-md-12 pt-3">
             <a href="#" class="btn btn-success" @click="save()">
@@ -115,7 +127,9 @@ export default {
       },
       banks: [],
       documents: [],
+      suppliers: [],
       checks: [],
+      movements: ["Abonar", "Cargar"],
       headers: [
         "#",
         "Código",
@@ -158,6 +172,14 @@ export default {
         this.check.document_name = res.data.documents[0].document_name;
       }
 
+      res = await axios.get("api/supplier");
+      this.suppliers = res.data.suppliers;
+
+      if (this.suppliers.length > 0) {
+        this.check.check_name = res.data.suppliers[0].name_supplier;
+      }
+
+      this.check.movement = this.movements[0];
       this.check.date = new Date().toISOString().substr(0, 10);
       this.loading = false;
     },
