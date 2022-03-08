@@ -15,13 +15,13 @@ class CreateCheckTable extends Migration
     {
         Schema::create('checks', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
+            // $table->string('code');
+            $table->string('check_number');
             $table->string('check_name');
             $table->string('concept');
             $table->string('date');
             $table->double('amount');
             $table->string('total_letters');
-            $table->string('check_number');
             $table->string('number_project')->nullable();
             $table->foreignId('type_fund_id')->constrained('documents');
             $table->foreignId('bank_id')->constrained('banks');

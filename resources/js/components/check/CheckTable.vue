@@ -14,21 +14,23 @@
         </tr>
         <tr v-for="(value, index) in data" :key="value.id">
           <td>{{ index + 1 }}</td>
+          <td>{{ value.check_number }}</td>
           <td>{{ value.check_name }}</td>
           <td>{{ value.concept }}</td>
           <td>{{ value.date }}</td>
           <td>{{ value.amount }}</td>
-          <td>{{ value.total_letters }}</td>
-          <td>{{ value.check_number }}</td>
-          <td>{{ value.type_fund }}</td>
+          <td>{{ value.document_name }}</td>
+          <td>{{ value.account_number }}</td>
           <td>{{ value.number_project }}</td>
-          <td>{{ value.bank_account }}</td>
           <td>
             <a href="#" class="btn btn-warning" @click="edit(value.id)"
               ><i class="fa fa-edit"></i> Editar</a
             >
             <a href="#" class="btn btn-danger" @click="deleteValue(value.id)"
               ><i class="fa fa-trash"></i> Eliminar</a
+            >
+            <a href="#" class="btn btn-info" @click="generateCheck(value.id)"
+              ><i class="fa fa-file"></i> Generar cheque</a
             >
           </td>
         </tr>
@@ -60,6 +62,9 @@ export default {
     },
     async edit(id) {
       this.$emit("edit", id);
+    },
+    generateCheck(id) {
+      window.open("/generateCheck/" + id);
     },
   },
 };

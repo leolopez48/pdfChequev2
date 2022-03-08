@@ -119,10 +119,12 @@ export default {
       headers: [
         "#",
         "Código",
+        "Proveedor",
         "Concepto",
         "Fecha",
         "Monto",
         "Fondo",
+        "No. de cuenta",
         "No. de proyecto",
         "Acciones",
       ],

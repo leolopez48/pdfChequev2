@@ -24,9 +24,7 @@ use App\Http\Controllers\BankController;
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    Route::get('generatePDFTotal', [PDFController::class, 'generatePDFTotal']);
-    Route::get('generatePDFGroups', [PDFController::class, 'generatePDFGroups']);
-    Route::get('generatePDFStudent/{id}', [PDFController::class, 'generatePDFStudent']);
+    Route::get('generateCheck/{id}', [PDFController::class, 'generateCheck']);
 
     Route::resource('api/supplier', SupplierController::class);
     Route::resource('api/document', DocumentController::class);

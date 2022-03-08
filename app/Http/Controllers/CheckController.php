@@ -17,7 +17,11 @@ class CheckController extends Controller
      */
     public function index()
     {
-        $checks = Check::all();
+        $checks = Check::select('*', 'checks.id as id')
+        ->join('banks as ba', 'checks.bank_id', '=', 'ba.id')
+        ->join('documents as do', 'checks.type_fund_id', '=', 'do.id')
+        // ->join('suppliers as su', 'checks.supplier_id', '=', 'su.id')
+        ->get();
 
         return response()->json(['message' => 'success', 'checks'=>$checks]);
     }
@@ -30,7 +34,6 @@ class CheckController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
         $lastModel = Check::latest()->first();
         $formatter = new NumeroALetras();
 
@@ -40,14 +43,14 @@ class CheckController extends Controller
         $check->concept = $request->concept;
         $check->date = $request->date;
         $check->amount = $request->amount;
-        $check->total_letters = $formatter->toMoney($request->amount, 2, 'DÓLARES', 'CENTAVOS');
+        $check->total_letters = $formatter->toInvoice($request->amount, 2, 'DÓLARES', 'CENTAVOS');
         $check->number_project = $request->number_project;
         $check->bank_id = Bank::where('account_number', $request->account_number)->first()->id;
         $check->type_fund_id = Document::where('document_name', $request->document_name)->first()->id;
-        // dd($check);
+
         $check->save();
 
-        Check::insert($request->except(['grade_name']));
+        // Check::insert($request->except(['grade_name']));
         return response()->json(['message'=>'success']);
     }
 
@@ -57,7 +60,7 @@ class CheckController extends Controller
      * @param  \App\Models\Check  $checks
      * @return \Illuminate\Http\Response
      */
-    public function show(Check $professor)
+    public function show(Check $check)
     {
         //
     }
@@ -69,9 +72,22 @@ class CheckController extends Controller
      * @param  \App\Models\Check  $checks
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Check $professor)
+    public function update(Request $request, Check $check)
     {
-        Check::where('id', $professor->id)->update($request->except(['grade_name']));
+        $formatter = new NumeroALetras();
+
+        // $check->check_number = date('Ymd').(($lastModel == null)?1:($lastModel->id+1));
+        $check->check_name = $request->check_name;
+        $check->concept = $request->concept;
+        $check->date = $request->date;
+        $check->amount = $request->amount;
+        $check->total_letters = $formatter->toMoney($request->amount, 2, 'DÓLARES', 'CENTAVOS');
+        $check->number_project = $request->number_project;
+        $check->bank_id = Bank::where('account_number', $request->account_number)->first()->id;
+        $check->type_fund_id = Document::where('document_name', $request->document_name)->first()->id;
+
+        $check->save();
+
         return response()->json(["message"=>"success"]);
     }
 
@@ -81,9 +97,9 @@ class CheckController extends Controller
      * @param  \App\Models\Check  $checks
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Check $professor)
+    public function destroy(Check $check)
     {
-        Check::where('id', $professor->id)->delete();
+        Check::where('id', $check->id)->delete();
         return response()->json(["message"=>"success"]);
     }
 }

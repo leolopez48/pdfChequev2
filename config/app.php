@@ -177,6 +177,7 @@ return [
 
         Barryvdh\DomPDF\ServiceProvider::class,
         Laraveles\Spanish\SpanishServiceProvider::class,
+        Jenssegers\Date\DateServiceProvider::class,
 
     ],
 

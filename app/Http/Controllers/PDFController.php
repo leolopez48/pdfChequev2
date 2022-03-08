@@ -4,97 +4,45 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use PDF;
-use App\Models\Grade;
-use App\Models\Professor;
+use App\Models\Check;
+use Jenssegers\Date\Date;
+use Luecano\NumeroALetras\NumeroALetras;
 
 class PDFController extends Controller
 {
 
-        /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function generatePDFTotal()
-    {
-        $professors = Professor::all();
-
-        foreach ($professors as $prof) {
-            $total = count(Professor::where('id', $prof->id)->get());
-            $prof->total = $total;
-            $prof->grade_name = Grade::where('id', $prof->grade_id)->first()->name;
-        }
-        // dd($professors);
-
-        $pdf = PDF::loadView('PDF.report', compact('professors'));
-
-        return $pdf->stream('report-'.now().'.pdf');
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function generatePDFGroups()
+    public function generateCheck($id)
     {
-        // $data = Grade::select('*')
-        // ->join('professors', 'grades.id', '=', 'professors.grade_id')
-        // ->join('students', 'grades.id', '=', 'students.grade_id')
-        // ->get();
+        Date::setLocale('es');
 
-        $firstGroup = Grade::select('*', 'grades.name as grade_name', 'students.age as student_age', 'students.last_names as student_last_names')
-        ->join('professors', 'grades.id', '=', 'professors.grade_id')
-        ->join('students', 'grades.id', '=', 'students.grade_id')
-        ->whereBetween('students.final_grade', [1,3])
-        ->get();
+        $check = Check::select('*', 'checks.id as id')
+        ->join('banks as ba', 'checks.bank_id', '=', 'ba.id')
+        ->join('documents as do', 'checks.type_fund_id', '=', 'do.id')
+        // ->join('suppliers as su', 'checks.supplier_id', '=', 'su.id')
+        ->where('checks.id', $id)
+        ->first();
 
-        $secondGroup = Grade::select('*', 'grades.name as grade_name', 'students.age as student_age', 'students.last_names as student_last_names')
-        ->join('professors', 'grades.id', '=', 'professors.grade_id')
-        ->join('students', 'grades.id', '=', 'students.grade_id')
-        ->whereBetween('students.final_grade', [4,6])
-        ->get();
+        $formatter = new NumeroALetras();
 
-        $thirdGroup = Grade::select('*', 'grades.name as grade_name', 'students.age as student_age', 'students.last_names as student_last_names')
-        ->join('professors', 'grades.id', '=', 'professors.grade_id')
-        ->join('students', 'grades.id', '=', 'students.grade_id')
-        ->whereBetween('students.final_grade', [7,10])
-        ->get();
 
-        $pdf = PDF::loadView('PDF.report_groups', compact('firstGroup', 'secondGroup', 'thirdGroup'));
+        $day = ucfirst(strtolower($formatter->toWords(intval(date('d', strtotime($check->date))))));
+        $newDate = new Date($check->date);
+        $month = $newDate->format('F');
+        $year = mb_strtolower($formatter->toWords(intval($newDate->format('Y'))), 'UTF-8');
+        $check->dateLetters = "$day de $month del $year";
 
-        return $pdf->stream('report-'.now().'.pdf');
-    }
+        $day = ucfirst($newDate->format('l'));
+        $numberDay = date('d', strtotime($check->date));
+        $month = $newDate->format('F');
+        $year = $newDate->format('Y');
+        $check->dateNumberLetters = ucfirst("$day $numberDay de $month de $year");
 
-    public function generatePDFStudent($id)
-    {
-        $data = Grade::select('*', 'grades.name as grade_name', 'students.age as student_age', 'students.last_names as student_last_names')
-        ->join('professors', 'grades.id', '=', 'professors.grade_id')
-        ->join('students', 'grades.id', '=', 'students.grade_id')
-        ->where('students.id', $id)
-        ->get();
-
-        $pdf = PDF::loadView('PDF.report_student', compact('data'));
-
-        return $pdf->stream('report-'.now().'.pdf');
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function generatePDFByDate(Request $request)
-    {
-        $start = $request->start;
-        $end = $request->end;
-
-        $data = Student::whereRaw(
-            "(created_at >= ? AND created_at <= ?)",
-            [$start, $end]
-        )->get();
-
-        $pdf = PDF::loadView('PDF.report', compact('data'));
+        $pdf = PDF::loadView('PDF.report', compact('check'));
 
         return $pdf->stream('report-'.now().'.pdf');
     }
