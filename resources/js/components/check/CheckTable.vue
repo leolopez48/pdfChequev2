@@ -19,6 +19,7 @@
           <td>{{ value.concept }}</td>
           <td>{{ value.date }}</td>
           <td>{{ value.amount }}</td>
+          <td>{{ value.net_total }}</td>
           <td>{{ value.document_name }}</td>
           <td>{{ value.account_number }}</td>
           <td>{{ value.number_project }}</td>

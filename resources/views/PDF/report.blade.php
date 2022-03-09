@@ -62,11 +62,11 @@
             <td>Lugar y fecha</td>
             <td> {{ $check->dateLetters }}</td>
             <td class="text-right">Monto</td>
-            <td>US${{ $check->amount }}</td>
+            <td>US${{ number_format($check->amount) }}</td>
         </tr>
         <tr>
             <td>Páguese a la orden de</td>
-            <td colspan="3"> {{ $check->check_name }}</td>
+            <td colspan="3"> {{ $check->supplier_name }}</td>
         </tr>
         <tr>
             <td>La suma de</td>
@@ -121,11 +121,12 @@
         </tr>
         <tr>
             <td> {{ $check->document }}</td>
-            <td> {{ $check->document }}</td>
-            <td> {{ $check->document }}</td>
-            <td> {{ $check->document }}</td>
-            <td> {{ $check->document }}</td>
-            <td> {{ $check->document }}</td>
+            <td> {{ $check->id }}</td>
+            <td> ${{ number_format($check->amount) }}</td>
+            <td> ${{ number_format($check->net_total * $check->rent) }}</td>
+            <td> ${{ number_format($check->net_total * $check->iva) }}</td>
+            <td> ${{ number_format($check->net_total * $check->rent + $check->net_total * $check->iva + $check->net_total) }}
+            </td>
 
         </tr>
 
@@ -134,7 +135,9 @@
     <br>
     <table>
         <tr>
-            <td colspan="9">CIFRADO PRESUPUESTARIO</td>
+            <td colspan="9">
+                <center>CIFRADO PRESUPUESTARIO</center>
+            </td>
         </tr>
         <tr>
             <td>AÑO</td>
@@ -235,11 +238,11 @@
     <br>
     <table>
         <tr>
-            <td><br><br><br><br><br><br></td>
-            <td><br><br><br><br><br><br></td>
-            <td><br><br><br><br><br><br></td>
-            <td><br><br><br><br><br><br></td>
-            <td><br><br><br><br><br><br></td>
+            <td><br><br><br><br><br></td>
+            <td><br><br><br><br><br></td>
+            <td><br><br><br><br><br></td>
+            <td><br><br><br><br><br></td>
+            <td><br><br><br><br><br></td>
         </tr>
         <tr>
             <td>HECHO POR</td>
@@ -261,13 +264,14 @@
     <table>
         <tr>
             <td colspan="2">
-                <center><b>POR:</b> US${{ $check->amount }}</center>
+                <center><b>POR:</b> US${{ number_format($check->amount) }}</center>
             </td>
         </tr>
         <tr>
             <td colspan="2">
                 Recibí de la Tesorería Municipal de Villa El Paraíso, Departamento de Chalatenango, la cantidad de:
-                {{ $check->total_letters }} de los Estados Unidos de América (${{ $check->amount }}), en concepto
+                {{ $check->total_letters }} de los Estados Unidos de América
+                (${{ number_format($check->amount, 2) }}), en concepto
                 de {{ $check->concept }}, egreso que hace la tesorería Municipal de Villa de El Paraíso de la Cuenta
                 Corriente {{ $check->document_name }} No. {{ $check->account_number }}, {{ $check->name_bank }}
                 y descargado del Cifrado del
@@ -287,15 +291,15 @@
                 Pago {{ $check->concept }}
             </td>
             <td>
-                {{ $check->amount }}
+                ${{ number_format($check->amount, 2) }}
             </td>
         </tr>
         <tr>
             <td>
-                Menos el 10% de renta
+                Menos el {{ $check->renta * 100 }}% de renta
             </td>
             <td>
-                {{ $check->rent }}
+                ${{ number_format($check->rent, 2) }}
             </td>
         </tr>
         <tr>
@@ -303,7 +307,7 @@
                 Líquido a recibir
             </td>
             <td>
-                {{ $check->amount }}
+                ${{ number_format($check->amount, 2) }}
             </td>
         </tr>
     </table>
@@ -314,10 +318,10 @@
     <br>
     <b>F.________________________</b> <br>
     <p>
-        Nombre: {{ $check->check_name }} <br>
-        DUI: {{ $check->check_name }} <br>
-        NIT: {{ $check->check_name }} <br>
-        Dirección: {{ $check->check_name }}
+        Nombre: {{ $check->supplier_name }} <br>
+        DUI: {{ $check->dui }} <br>
+        NIT: {{ $check->nit }} <br>
+        Dirección: {{ $check->address }}
     </p>
 
     <br>

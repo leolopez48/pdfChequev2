@@ -23,7 +23,7 @@ class PDFController extends Controller
         $check = Check::select('*', 'checks.id as id')
         ->join('banks as ba', 'checks.bank_id', '=', 'ba.id')
         ->join('documents as do', 'checks.type_fund_id', '=', 'do.id')
-        // ->join('suppliers as su', 'checks.supplier_id', '=', 'su.id')
+        ->join('suppliers as su', 'checks.supplier_id', '=', 'su.id')
         ->where('checks.id', $id)
         ->first();
 

@@ -63,6 +63,18 @@
             />
           </div>
           <div class="col-md-4 pt-3">
+            <label>IVA</label>
+            <input class="form-control" type="text" v-model="check.iva" />
+          </div>
+          <div class="col-md-4 pt-3">
+            <label>Documento</label>
+            <input class="form-control" type="text" v-model="check.document" />
+          </div>
+          <div class="col-md-4 pt-3">
+            <label>Renta</label>
+            <input class="form-control" type="text" v-model="check.rent" />
+          </div>
+          <div class="col-md-4 pt-3">
             <label>No. de Cuenta</label>
             <select v-model="check.account_number" class="form-select">
               <option
@@ -124,6 +136,9 @@ export default {
         number_project: "",
         document_name: "",
         amount: "0.00",
+        iva: "0.13",
+        rent: "0.00",
+        document: "Factura de consumidor final",
       },
       banks: [],
       documents: [],
@@ -136,7 +151,8 @@ export default {
         "Proveedor",
         "Concepto",
         "Fecha",
-        "Monto",
+        "Total",
+        "Total neto",
         "Fondo",
         "No. de cuenta",
         "No. de proyecto",

@@ -43,13 +43,17 @@ class CheckController extends Controller
         // $check->check_name = $request->check_name;
         $check->concept = $request->concept;
         $check->date = $request->date;
-        $check->amount = $request->amount;
+        $check->amount = $request->amount + ($request->amount * $request->iva) + ($request->amount * $request->rent);
         $check->movement = $request->movement;
         $check->total_letters = $formatter->toInvoice($request->amount, 2, 'DÓLARES', 'CENTAVOS');
         $check->number_project = $request->number_project;
         $check->bank_id = Bank::where('account_number', $request->account_number)->first()->id;
         $check->supplier_id = Supplier::where('name_supplier', $request->check_name)->first()->id;
         $check->type_fund_id = Document::where('document_name', $request->document_name)->first()->id;
+        $check->iva = $request->iva;
+        $check->rent = $request->rent;
+        $check->net_total = $request->amount;
+        $check->document = $request->document;
 
         $check->save();
 
@@ -83,12 +87,16 @@ class CheckController extends Controller
         // $check->check_name = $request->check_name;
         $check->concept = $request->concept;
         $check->date = $request->date;
-        $check->amount = $request->amount;
+        $check->amount =  $request->amount + ($request->amount * $request->iva) + ($request->amount * $request->rent);
         $check->movement = $request->movement;
         $check->total_letters = $formatter->toMoney($request->amount, 2, 'DÓLARES', 'CENTAVOS');
         $check->number_project = $request->number_project;
         $check->bank_id = Bank::where('account_number', $request->account_number)->first()->id;
         $check->type_fund_id = Document::where('document_name', $request->document_name)->first()->id;
+        $check->iva = $request->iva;
+        $check->rent = $request->rent;
+        $check->net_total = $request->amount;
+        $check->document = $request->document;
 
         $check->save();
 

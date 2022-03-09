@@ -20,6 +20,10 @@ class Check extends Model
         'number_project',
         'bank_id',
         'type_fund_id',
+        'iva',
+        'rent',
+        'net_total',
+        'document'
     ];
 
     protected $timestamp = true;

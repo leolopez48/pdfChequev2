@@ -23,6 +23,10 @@ class CreateCheckTable extends Migration
             $table->double('amount');
             $table->string('total_letters');
             $table->string('movement');
+            $table->string('iva');
+            $table->string('rent');
+            $table->string('net_total');
+            $table->string('document');
             $table->string('number_project')->nullable();
             $table->foreignId('type_fund_id')->constrained('documents');
             $table->foreignId('bank_id')->constrained('banks');
