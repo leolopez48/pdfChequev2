@@ -9,18 +9,18 @@
       </tr>
       <tr v-for="detail in debe" :key="detail.id">
         <td>{{ detail.concept }}</td>
-        <td>{{ detail.amount }}</td>
+        <td>{{ toMoney(detail.net_total) }}</td>
         <td></td>
       </tr>
       <tr v-for="detail in haber" :key="detail.id">
         <td>{{ detail.concept }}</td>
         <td></td>
-        <td>{{ detail.amount }}</td>
+        <td>{{ toMoney(detail.net_total) }}</td>
       </tr>
       <tr>
         <td><b>Total (US$)</b></td>
-        <td>{{ totalDebe }}</td>
-        <td>{{ totalHaber }}</td>
+        <td>{{ toMoney(totalDebe) }}</td>
+        <td>{{ toMoney(totalHaber) }}</td>
       </tr>
     </table>
   </div>
@@ -52,6 +52,10 @@ export default {
         this.totalDebe = res.data.totalDebe;
         this.totalHaber = res.data.totalHaber;
       }
+    },
+
+    toMoney(value) {
+      return Number.parseFloat(value).toFixed(2);
     },
   },
 };

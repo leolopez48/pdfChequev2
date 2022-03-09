@@ -51,8 +51,8 @@ export default {
   data: () => {
     return {
       document: {
-        code: "Lopez",
-        document_name: "Leonel",
+        code: "",
+        document_name: "",
       },
       documents: [],
       headers: ["#", "Código", "Nombre", "Acciones"],

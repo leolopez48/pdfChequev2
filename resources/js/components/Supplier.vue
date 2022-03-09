@@ -72,9 +72,9 @@ export default {
   data: () => {
     return {
       supplier: {
-        dui: "Lopez",
-        nit: "040119",
-        name_supplier: "Leonel",
+        dui: "",
+        nit: "",
+        name_supplier: "",
       },
       suppliers: [],
       grades: [],

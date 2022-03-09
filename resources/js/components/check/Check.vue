@@ -129,9 +129,9 @@ export default {
   data: () => {
     return {
       check: {
-        code: "Lopez",
-        check_name: "Leonel",
-        concept: "Leonel",
+        code: "",
+        check_name: "",
+        concept: "",
         date: "",
         account_number: "",
         number_project: "",
@@ -264,7 +264,11 @@ export default {
     },
 
     cleanInputs() {
-      this.check = {};
+      this.check = {
+        amount: "0.00",
+        iva: "0.13",
+        rent: "0.00",
+      };
       this.textButton = "Guardar";
     },
   },
