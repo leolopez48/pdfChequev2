@@ -45,6 +45,17 @@
         padding: 0 !important;
     }
 
+    table.no-border tr td,
+    .no-border td,
+    .no-border th,
+    .no-border tr {
+        border: 0px;
+    }
+
+    .no-border {
+        border: 0px;
+    }
+
 </style>
 
 <body>
@@ -237,6 +248,17 @@
             <td> </td>
         </tr>
         <tr>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr>
             <td colspan="7"> </td>
             <td> </td>
             <td> </td>
@@ -245,7 +267,7 @@
     </table>
 
     <br>
-    <table>
+    <table class="no-border">
         <tr>
             <td><br><br><br><br><br><br><br><br></td>
             <td><br><br><br><br><br><br><br><br></td>
@@ -270,7 +292,7 @@
     </table>
 
     <br>
-    <table>
+    <table class="no-border">
         <tr>
             <td colspan="2">
                 <center><b>POR:</b> US${{ number_format($check->amount, 2) }}</center>
@@ -335,7 +357,7 @@
 
     <br>
     <br>
-    <table>
+    <table class="no-border">
         <tr>
             <td><br><br><br><br><br><br></td>
             <td><br><br><br><br><br><br></td>
