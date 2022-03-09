@@ -7,8 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Report</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <style>
     * {
@@ -62,7 +60,7 @@
             <td>Lugar y fecha</td>
             <td> {{ $check->dateLetters }}</td>
             <td class="text-right">Monto</td>
-            <td>US${{ number_format($check->amount) }}</td>
+            <td>US${{ number_format($check->amount, 2) }}</td>
         </tr>
         <tr>
             <td>Páguese a la orden de</td>
@@ -122,10 +120,10 @@
         <tr>
             <td> {{ $check->document }}</td>
             <td> {{ $check->id }}</td>
-            <td> ${{ number_format($check->amount) }}</td>
-            <td> ${{ number_format($check->net_total * $check->rent) }}</td>
-            <td> ${{ number_format($check->net_total * $check->iva) }}</td>
-            <td> ${{ number_format($check->net_total * $check->rent + $check->net_total * $check->iva + $check->net_total) }}
+            <td> ${{ number_format($check->amount, 2) }}</td>
+            <td> ${{ number_format($check->net_total * $check->rent, 2) }}</td>
+            <td> ${{ number_format($check->net_total * $check->iva, 2) }}</td>
+            <td> ${{ number_format($check->net_total * $check->rent + $check->net_total * $check->iva + $check->net_total, 2) }}
             </td>
 
         </tr>
@@ -228,6 +226,17 @@
             <td> </td>
         </tr>
         <tr>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr>
             <td colspan="7"> </td>
             <td> </td>
             <td> </td>
@@ -238,11 +247,11 @@
     <br>
     <table>
         <tr>
-            <td><br><br><br><br><br></td>
-            <td><br><br><br><br><br></td>
-            <td><br><br><br><br><br></td>
-            <td><br><br><br><br><br></td>
-            <td><br><br><br><br><br></td>
+            <td><br><br><br><br><br><br><br><br></td>
+            <td><br><br><br><br><br><br><br><br></td>
+            <td><br><br><br><br><br><br><br><br></td>
+            <td><br><br><br><br><br><br><br><br></td>
+            <td><br><br><br><br><br><br><br><br></td>
         </tr>
         <tr>
             <td>HECHO POR</td>
@@ -264,7 +273,7 @@
     <table>
         <tr>
             <td colspan="2">
-                <center><b>POR:</b> US${{ number_format($check->amount) }}</center>
+                <center><b>POR:</b> US${{ number_format($check->amount, 2) }}</center>
             </td>
         </tr>
         <tr>

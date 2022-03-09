@@ -113,15 +113,28 @@ export default {
     },
 
     async deleteP(id) {
-      const res = await axios.delete(`api/document/${id}`).catch((e) => {
-        ui.alert("Registro no pudo ser eliminado correctamente.", "error");
-      });
+      Swal.fire({
+        title: "¿Estás seguro de eliminar este registro?",
+        text: "",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Cancelar",
+        confirmButtonText: "Confimar",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await axios.delete(`api/document/${id}`).catch((e) => {
+            ui.alert("Registro no pudo ser eliminado correctamente.", "error");
+          });
 
-      if (res.data.message == "success") {
-        ui.alert("Registro eliminado correctamente.");
-        this.initialize();
-        this.cleanInputs();
-      }
+          if (res.data.message == "success") {
+            ui.alert("Registro eliminado correctamente.");
+            this.initialize();
+            this.cleanInputs();
+          }
+        }
+      });
     },
 
     cleanInputs() {
