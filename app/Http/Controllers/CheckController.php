@@ -83,8 +83,6 @@ class CheckController extends Controller
     {
         $formatter = new NumeroALetras();
 
-        // $check->check_number = date('Ymd').(($lastModel == null)?1:($lastModel->id+1));
-        // $check->check_name = $request->check_name;
         $check->concept = $request->concept;
         $check->date = $request->date;
         $check->amount =  $request->amount + ($request->amount * $request->iva) + ($request->amount * $request->rent);

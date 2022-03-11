@@ -17,6 +17,7 @@ class CreateBanksTable extends Migration
             $table->id();
             $table->string('name_bank');
             $table->string('account_number');
+            $table->string('initial_amount');
             $table->timestamps();
         });
     }

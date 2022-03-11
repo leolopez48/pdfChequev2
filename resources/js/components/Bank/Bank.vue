@@ -20,6 +20,14 @@
               v-model="bank.account_number"
             />
           </div>
+          <div class="col-md-4 pt-3">
+            <label>Monto inicial</label>
+            <input
+              class="form-control"
+              type="text"
+              v-model="bank.initial_amount"
+            />
+          </div>
           <div class="col-md-12 pt-3">
             <a href="#" class="btn btn-success" @click="save()">
               <i class="fa fa-save"></i> {{ textButton }}</a
@@ -50,8 +58,9 @@ export default {
   data: () => {
     return {
       bank: {
-        name_bank: "Leonel",
-        account_number: "Leonel3",
+        name_bank: "",
+        account_number: "",
+        initial_amount: "0.00",
       },
       banks: [],
       grades: [],
@@ -138,7 +147,11 @@ export default {
     },
 
     cleanInputs() {
-      this.bank = {};
+      this.bank = {
+        name_bank: "",
+        account_number: "",
+        initial_amount: "0.00",
+      };
       this.textButton = "Guardar";
     },
   },

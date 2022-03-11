@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bank;
 use Illuminate\Http\Request;
 use PDF;
 use App\Models\Check;
@@ -29,7 +30,6 @@ class PDFController extends Controller
 
         $formatter = new NumeroALetras();
 
-
         $day = ucfirst(strtolower($formatter->toWords(intval(date('d', strtotime($check->date))))));
         $newDate = new Date($check->date);
         $month = $newDate->format('F');
@@ -43,6 +43,40 @@ class PDFController extends Controller
         $check->dateNumberLetters = ucfirst("$day $numberDay de $month de $year");
 
         $pdf = PDF::loadView('PDF.report', compact('check'));
+
+        return $pdf->stream('report-'.now().'.pdf');
+    }
+
+    public function generateSummary($id)
+    {
+        $bank = Bank::where(['id'=>$id])
+        ->first();
+
+        $debe = Check::select('*', 'checks.id as id')
+        ->join('banks as ba', 'checks.bank_id', '=', 'ba.id')
+        ->join('documents as do', 'checks.type_fund_id', '=', 'do.id')
+        ->join('suppliers as su', 'checks.supplier_id', '=', 'su.id')
+        ->where(['checks.movement'=>"Cargar", 'ba.id'=>$id])
+        ->get();
+
+        $haber = Check::select('*', 'checks.id as id')
+        ->join('banks as ba', 'checks.bank_id', '=', 'ba.id')
+        ->join('documents as do', 'checks.type_fund_id', '=', 'do.id')
+        ->join('suppliers as su', 'checks.supplier_id', '=', 'su.id')
+        ->where(['checks.movement'=> "Abonar", 'ba.id'=>$id])
+        ->get();
+
+        $totalDebe = $bank->initial_amount;
+        foreach ($debe as $key => $value) {
+            $totalDebe += $value->net_total;
+        }
+
+        $totalHaber = 0;
+        foreach ($haber as $key => $value) {
+            $totalHaber += $value->net_total;
+        }
+
+        $pdf = PDF::loadView('PDF.summary', compact('bank', 'debe', 'haber', 'totalDebe', 'totalHaber'));
 
         return $pdf->stream('report-'.now().'.pdf');
     }

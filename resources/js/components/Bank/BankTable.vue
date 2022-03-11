@@ -16,12 +16,16 @@
           <td>{{ index + 1 }}</td>
           <td>{{ value.name_bank }}</td>
           <td>{{ value.account_number }}</td>
+          <td>{{ value.initial_amount }}</td>
           <td>
             <a href="#" class="btn btn-warning" @click="edit(value.id)"
               ><i class="fa fa-edit"></i> Editar</a
             >
             <a href="#" class="btn btn-danger" @click="deleteValue(value.id)"
               ><i class="fa fa-trash"></i> Eliminar</a
+            >
+            <a href="#" class="btn btn-info" @click="generateReport(value.id)">
+              <i class="fa fa-doc"></i> Reporte</a
             >
           </td>
         </tr>
@@ -53,6 +57,9 @@ export default {
     },
     async edit(id) {
       this.$emit("edit", id);
+    },
+    generateReport(id) {
+      window.open("/generateSummary/" + id);
     },
   },
 };

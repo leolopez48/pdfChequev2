@@ -25,6 +25,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     Route::get('generateCheck/{id}', [PDFController::class, 'generateCheck']);
+    Route::get('generateSummary/{id}', [PDFController::class, 'generateSummary']);
 
     Route::resource('api/supplier', SupplierController::class);
     Route::resource('api/document', DocumentController::class);
