@@ -61,4 +61,4 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::post('api/student/id', [StudentController::class, 'studentByCarnet']);
 
-Auth::routes();
+Auth::routes(['register'=>false, 'reset'=>false]);
