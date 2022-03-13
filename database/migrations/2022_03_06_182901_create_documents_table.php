@@ -17,6 +17,9 @@ class CreateDocumentsTable extends Migration
             $table->id();
             $table->string('code');
             $table->string('document_name');
+            $table->string('initial_amount');
+            $table->string('account_number');
+            $table->foreignId('bank_id')->constrained('banks');
             $table->timestamps();
         });
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bank;
 use App\Models\Document;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,9 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        $documents = Document::all();
+        $documents = Document::select('*', "documents.id as id")
+        ->join('banks as ba', 'documents.bank_id', '=', 'ba.id')
+        ->get();
 
         return response()->json(['message' => 'success', 'documents'=>$documents]);
     }
@@ -27,7 +30,10 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        Document::insert($request->all());
+        $data = $request->except('name_bank');
+        $data['bank_id'] = Bank::where('name_bank', $request->name_bank)->first()->id;
+
+        Document::insert($data);
         return response()->json(['message'=>'success']);
     }
 
@@ -51,7 +57,10 @@ class DocumentController extends Controller
      */
     public function update(Request $request, Document $document)
     {
-        Document::where('id', $document->id)->update($request->all());
+        $data = $request->except('name_bank');
+        $data['bank_id'] = Bank::where('name_bank', $request->name_bank)->first()->id;
+
+        Document::where('id', $document->id)->update($data);
         return response()->json(["message"=>"success"]);
     }
 

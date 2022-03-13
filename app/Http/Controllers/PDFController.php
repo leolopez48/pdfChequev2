@@ -6,6 +6,7 @@ use App\Models\Bank;
 use Illuminate\Http\Request;
 use PDF;
 use App\Models\Check;
+use App\Models\Document;
 use Jenssegers\Date\Date;
 use Luecano\NumeroALetras\NumeroALetras;
 
@@ -22,8 +23,8 @@ class PDFController extends Controller
         Date::setLocale('es');
 
         $check = Check::select('*', 'checks.id as id')
-        ->join('banks as ba', 'checks.bank_id', '=', 'ba.id')
         ->join('documents as do', 'checks.type_fund_id', '=', 'do.id')
+        ->join('banks as ba', 'do.bank_id', '=', 'ba.id')
         ->join('suppliers as su', 'checks.supplier_id', '=', 'su.id')
         ->where('checks.id', $id)
         ->first();
@@ -49,21 +50,21 @@ class PDFController extends Controller
 
     public function generateSummary($id)
     {
-        $bank = Bank::where(['id'=>$id])
+        $bank = Document::where(['id'=>$id])
         ->first();
 
         $debe = Check::select('*', 'checks.id as id')
-        ->join('banks as ba', 'checks.bank_id', '=', 'ba.id')
         ->join('documents as do', 'checks.type_fund_id', '=', 'do.id')
+        ->join('banks as ba', 'do.bank_id', '=', 'ba.id')
         ->join('suppliers as su', 'checks.supplier_id', '=', 'su.id')
-        ->where(['checks.movement'=>"Cargar", 'ba.id'=>$id])
+        ->where(['checks.movement'=>"Cargar", 'do.id'=>$id])
         ->get();
 
         $haber = Check::select('*', 'checks.id as id')
-        ->join('banks as ba', 'checks.bank_id', '=', 'ba.id')
         ->join('documents as do', 'checks.type_fund_id', '=', 'do.id')
+        ->join('banks as ba', 'do.bank_id', '=', 'ba.id')
         ->join('suppliers as su', 'checks.supplier_id', '=', 'su.id')
-        ->where(['checks.movement'=> "Abonar", 'ba.id'=>$id])
+        ->where(['checks.movement'=> "Abonar", 'do.id'=>$id])
         ->get();
 
         $totalDebe = $bank->initial_amount;

@@ -29,7 +29,7 @@ class CreateCheckTable extends Migration
             $table->string('document');
             $table->string('number_project')->nullable();
             $table->foreignId('type_fund_id')->constrained('documents');
-            $table->foreignId('bank_id')->constrained('banks');
+            // $table->foreignId('bank_id')->constrained('banks');
             $table->foreignId('supplier_id')->constrained('suppliers');
             $table->timestamps();
         });

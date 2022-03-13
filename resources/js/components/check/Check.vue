@@ -39,11 +39,11 @@
               class="form-control"
               type="number"
               step="0.01"
-              v-model="check.amount"
+              v-model="check.net_total"
             />
           </div>
           <div class="col-md-4 pt-3">
-            <label>Tipo de fondo</label>
+            <label>Cuenta</label>
             <select v-model="check.document_name" class="form-select">
               <option
                 v-for="document in documents"
@@ -73,18 +73,6 @@
           <div class="col-md-4 pt-3">
             <label>Renta</label>
             <input class="form-control" type="text" v-model="check.rent" />
-          </div>
-          <div class="col-md-4 pt-3">
-            <label>No. de Cuenta</label>
-            <select v-model="check.account_number" class="form-select">
-              <option
-                v-for="account in banks"
-                :key="account.id"
-                :value="account.account_number"
-              >
-                {{ account.account_number }}
-              </option>
-            </select>
           </div>
           <div class="col-md-4 pt-3">
             <label>Movimiento</label>
@@ -136,7 +124,7 @@ export default {
         account_number: "",
         number_project: "",
         document_name: "",
-        amount: "0.00",
+        net_total: "0.00",
         iva: "0.13",
         rent: "0.00",
         document: "Factura de consumidor final",
@@ -174,13 +162,6 @@ export default {
 
       let res = await axios.get("api/check");
       this.checks = res.data.checks;
-      res = await axios.get("api/bank");
-      this.banks = res.data.banks;
-
-      if (this.banks.length > 0) {
-        console.log(res.data);
-        this.check.account_number = res.data.banks[0].account_number;
-      }
 
       res = await axios.get("api/document");
       this.documents = res.data.documents;
@@ -265,7 +246,7 @@ export default {
 
     cleanInputs() {
       this.check = {
-        amount: "0.00",
+        net_total: "0.00",
         iva: "0.13",
         rent: "0.00",
       };

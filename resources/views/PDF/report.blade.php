@@ -75,7 +75,7 @@
         </tr>
         <tr>
             <td>Páguese a la orden de</td>
-            <td colspan="3"> {{ $check->supplier_name }}</td>
+            <td colspan="3"> {{ $check->name_supplier }}</td>
         </tr>
         <tr>
             <td>La suma de</td>
@@ -349,7 +349,7 @@
     <br>
     <b>F.________________________</b> <br>
     <p>
-        Nombre: {{ $check->supplier_name }} <br>
+        Nombre: {{ $check->name_supplier }} <br>
         DUI: {{ $check->dui }} <br>
         NIT: {{ $check->nit }} <br>
         Dirección: {{ $check->address }}
@@ -365,6 +365,10 @@
         <tr>
             <td>AUTORIZADO</td>
             <td>VISTO BUENO</td>
+        </tr>
+        <tr>
+            <td>Oswal Sibrián Miranda</td>
+            <td>Oscar Armando Joaquín</td>
         </tr>
         <tr>
             <td> Alcalde Municipal</td>

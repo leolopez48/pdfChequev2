@@ -12,22 +12,6 @@
             <label>Nombre</label>
             <input class="form-control" type="text" v-model="bank.name_bank" />
           </div>
-          <div class="col-md-4 pt-3">
-            <label>No. de cuenta</label>
-            <input
-              class="form-control"
-              type="text"
-              v-model="bank.account_number"
-            />
-          </div>
-          <div class="col-md-4 pt-3">
-            <label>Monto inicial</label>
-            <input
-              class="form-control"
-              type="text"
-              v-model="bank.initial_amount"
-            />
-          </div>
           <div class="col-md-12 pt-3">
             <a href="#" class="btn btn-success" @click="save()">
               <i class="fa fa-save"></i> {{ textButton }}</a
@@ -59,12 +43,10 @@ export default {
     return {
       bank: {
         name_bank: "",
-        account_number: "",
-        initial_amount: "0.00",
       },
       banks: [],
       grades: [],
-      headers: ["#", "Nombre", "No. de cuenta", "Acciones"],
+      headers: ["#", "Nombre"],
       textButton: "Guardar",
       loading: false,
     };

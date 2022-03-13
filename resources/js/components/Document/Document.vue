@@ -3,7 +3,7 @@
     <div class="container">
       <template v-if="!loading">
         <div class="row">
-          <h1>Tipo de fondos</h1>
+          <h1>Cuentas</h1>
           <!-- Form -->
           <div class="col-md-4 d-none">
             <input class="form-control" type="text" v-model="document.id" />
@@ -13,12 +13,41 @@
             <label>Código</label>
             <input class="form-control" type="text" v-model="document.code" />
           </div>
-          <div class="col-md-6 pt-3">
+          <div class="col-md-4 pt-3">
             <label>Nombre</label>
             <input
               class="form-control"
               type="text"
               v-model="document.document_name"
+            />
+          </div>
+          <div class="col-md-4 pt-3">
+            <label>Banco</label>
+            <select v-model="document.name_bank" class="form-select">
+              <option
+                v-for="bank in banks"
+                :key="bank.id"
+                :value="bank.name_bank"
+              >
+                {{ bank.name_bank }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-4 pt-3">
+            <label>No. de cuenta</label>
+            <input
+              class="form-control"
+              type="text"
+              v-model="document.account_number"
+            />
+          </div>
+          <div class="col-md-4 pt-3">
+            <label>Monto inicial (US$)</label>
+            <input
+              class="form-control"
+              type="number"
+              step="0.01"
+              v-model="document.initial_amount"
             />
           </div>
 
@@ -46,6 +75,7 @@
 
 <script>
 import ui from "../../libs/ui";
+import axios from "axios";
 
 export default {
   data: () => {
@@ -53,9 +83,21 @@ export default {
       document: {
         code: "",
         document_name: "",
+        account_number: "",
+        name_bank: "",
+        initial_amount: "0.00",
       },
+      banks: [],
       documents: [],
-      headers: ["#", "Código", "Nombre", "Acciones"],
+      headers: [
+        "#",
+        "Código",
+        "Nombre",
+        "No. de cuenta",
+        "Monto inicial",
+        "Banco",
+        "Acciones",
+      ],
       textButton: "Guardar",
       loading: false,
     };
@@ -71,6 +113,13 @@ export default {
 
       let res = await axios.get("api/document");
       this.documents = res.data.documents;
+
+      res = await axios.get("api/bank");
+      this.banks = res.data.banks;
+
+      if (this.banks.length > 0) {
+        this.document.name_bank = res.data.banks[0].name_bank;
+      }
 
       this.loading = false;
     },
@@ -138,7 +187,13 @@ export default {
     },
 
     cleanInputs() {
-      this.document = {};
+      this.document = {
+        code: "",
+        document_name: "",
+        account_number: "",
+        name_bank: "",
+        initial_amount: "0.00",
+      };
       this.textButton = "Guardar";
     },
   },
