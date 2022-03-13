@@ -21,7 +21,8 @@ class CheckController extends Controller
         $checks = Check::select('*', 'checks.id as id')
         ->join('documents as do', 'checks.type_fund_id', '=', 'do.id')
         ->join('suppliers as su', 'checks.supplier_id', '=', 'su.id')
-        ->get();
+        ->orderBy('checks.id', 'desc')
+        ->paginate(15);
 
         return response()->json(['message' => 'success', 'checks'=>$checks]);
     }

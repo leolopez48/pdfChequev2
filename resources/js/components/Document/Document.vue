@@ -65,6 +65,11 @@
             @edit="edit($event)"
           />
         </div>
+        <paginationLaravel
+          :data="pagination"
+          @pagination-change-page="getResults"
+          :limit="1"
+        ></paginationLaravel>
       </template>
       <template v-else>
         <alert />
@@ -76,8 +81,10 @@
 <script>
 import ui from "../../libs/ui";
 import axios from "axios";
+import PaginationLaravel from "laravel-vue-pagination";
 
 export default {
+  components: { PaginationLaravel },
   data: () => {
     return {
       document: {
@@ -100,6 +107,7 @@ export default {
       ],
       textButton: "Guardar",
       loading: false,
+      pagination: {},
     };
   },
 
@@ -112,7 +120,8 @@ export default {
       this.loading = true;
 
       let res = await axios.get("api/document");
-      this.documents = res.data.documents;
+      this.documents = res.data.documents.data;
+      this.pagination = res.data.documents;
 
       res = await axios.get("api/bank");
       this.banks = res.data.banks;
@@ -195,6 +204,12 @@ export default {
         initial_amount: "0.00",
       };
       this.textButton = "Guardar";
+    },
+
+    async getResults(page = 1) {
+      const res = await axios.get(this.pagination.path + "?page=" + page);
+      this.documents = res.data.documents.data;
+      this.pagination = res.data.documents;
     },
   },
 };

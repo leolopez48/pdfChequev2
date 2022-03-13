@@ -12,10 +12,10 @@
             No se encontraron registros por mostrar.
           </td>
         </tr>
-        <tr v-for="(value, index) in data" :key="value.id">
-          <td>{{ index + 1 }}</td>
+        <tr v-for="value in data" :key="value.id">
+          <td>{{ value.id }}</td>
           <td>{{ value.check_number }}</td>
-          <td>{{ value.check_name }}</td>
+          <td>{{ value.name_supplier }}</td>
           <td>{{ value.concept }}</td>
           <td>{{ value.date }}</td>
           <td>{{ value.amount }}</td>

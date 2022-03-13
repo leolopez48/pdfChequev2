@@ -18,9 +18,9 @@ window.Vue = require("vue").default;
 
 const files = require.context("./", true, /\.vue$/i);
 files.keys().map((key) => {
-    // console.log(key);
     Vue.component(key.split("/").pop().split(".")[0], files(key).default);
 });
+Vue.component("pagination-vue", require("laravel-vue-pagination"));
 
 import VueMask from "v-mask";
 Vue.use(VueMask);

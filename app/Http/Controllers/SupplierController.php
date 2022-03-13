@@ -14,7 +14,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $suppliers = Supplier::all();
+        $suppliers = Supplier::paginate(15);
 
         return response()->json(['message' => 'success', 'suppliers'=>$suppliers]);
     }
