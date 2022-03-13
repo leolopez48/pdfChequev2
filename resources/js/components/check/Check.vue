@@ -173,17 +173,17 @@ export default {
       this.pagination = res.data.checks;
 
       res = await axios.get("api/document");
-      this.documents = res.data.documents;
+      this.documents = res.data.documents.data;
 
       if (this.documents.length > 0) {
-        this.check.document_name = res.data.documents[0].document_name;
+        this.check.document_name = this.documents[0].document_name;
       }
 
       res = await axios.get("api/supplier");
-      this.suppliers = res.data.suppliers;
+      this.suppliers = res.data.suppliers.data;
 
       if (this.suppliers.length > 0) {
-        this.check.check_name = res.data.suppliers[0].name_supplier;
+        this.check.check_name = this.suppliers[0].name_supplier;
       }
 
       this.check.movement = this.movements[0];

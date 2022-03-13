@@ -81,6 +81,7 @@
 <script>
 import ui from "../../libs/ui";
 import axios from "axios";
+import Swal from "sweetalert2";
 import PaginationLaravel from "laravel-vue-pagination";
 
 export default {

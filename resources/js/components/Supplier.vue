@@ -73,6 +73,7 @@
 <script>
 import ui from "../libs/ui";
 import PaginationLaravel from "laravel-vue-pagination";
+import Swal from "sweetalert2";
 
 export default {
   components: { PaginationLaravel },
