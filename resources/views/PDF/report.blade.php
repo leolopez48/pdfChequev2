@@ -283,10 +283,10 @@
             <td>RECIBI</td>
         </tr>
         <tr>
-            <td> Mayra Lissethe Renderos</td>
-            <td> Milagro Hernandez</td>
-            <td> Oswald Sibrián Miranda</td>
-            <td> Oscar Armando Joaquín</td>
+            <td> María Stefany Urbina Alas</td>
+            <td> Jaime Alexandre Sibrián Ávalos</td>
+            <td> Alexi Antanio Escalante Galdámez</td>
+            <td> Hernán Alvarenga Hércules</td>
             <td> </td>
         </tr>
     </table>
@@ -367,8 +367,8 @@
             <td>VISTO BUENO</td>
         </tr>
         <tr>
-            <td>Oswal Sibrián Miranda</td>
-            <td>Oscar Armando Joaquín</td>
+            <td>Alexi Antonio Escalante Galdámez</td>
+            <td>Hernán Alvarenga Hércules </td>
         </tr>
         <tr>
             <td> Alcalde Municipal</td>
