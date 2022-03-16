@@ -31,7 +31,7 @@ class PDFController extends Controller
 
         $formatter = new NumeroALetras();
 
-        $day = ucfirst(strtolower($formatter->toWords(intval(date('d', strtotime($check->date))))));
+        $day = ucfirst(mb_strtolower($formatter->toWords(intval(date('d', strtotime($check->date)))), 'UTF-8'));
         $newDate = new Date($check->date);
         $month = $newDate->format('F');
         $year = mb_strtolower($formatter->toWords(intval($newDate->format('Y'))), 'UTF-8');
@@ -77,7 +77,15 @@ class PDFController extends Controller
             $totalHaber += $value->net_total;
         }
 
-        $pdf = PDF::loadView('PDF.summary', compact('bank', 'debe', 'haber', 'totalDebe', 'totalHaber'));
+        $totalGeneralDebe = 0;
+        $totalGeneralHaber = 0;
+        if ($totalDebe > $totalHaber) {
+            $totalGeneralDebe = number_format($totalDebe - $totalHaber, 2);
+        } else {
+            $totalGeneralHaber = number_format($totalHaber - $totalDebe, 2);
+        }
+
+        $pdf = PDF::loadView('PDF.summary', compact('bank', 'debe', 'haber', 'totalDebe', 'totalHaber', 'totalGeneralDebe', 'totalGeneralHaber'));
 
         return $pdf->stream('report-'.now().'.pdf');
     }

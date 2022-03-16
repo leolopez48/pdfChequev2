@@ -10,7 +10,7 @@
           </div>
           <div class="col-md-6 pt-3">
             <label>Proveedor</label>
-            <select v-model="check.check_name" class="form-select">
+            <select v-model="check.name_supplier" class="form-select">
               <option
                 v-for="supplier in suppliers"
                 :key="supplier.id"
@@ -125,7 +125,7 @@ export default {
     return {
       check: {
         code: "",
-        check_name: "",
+        name_supplier: "",
         concept: "",
         date: "",
         account_number: "",
@@ -183,7 +183,7 @@ export default {
       this.suppliers = res.data.suppliers.data;
 
       if (this.suppliers.length > 0) {
-        this.check.check_name = this.suppliers[0].name_supplier;
+        this.check.name_supplier = this.suppliers[0].name_supplier;
       }
 
       this.check.movement = this.movements[0];
@@ -223,8 +223,9 @@ export default {
       this.cleanInputs();
     },
 
-    edit(id) {
-      this.check = this.checks.find((check) => check.id == id);
+    edit(value) {
+      this.check = value;
+
       this.textButton = "Modificar";
     },
 

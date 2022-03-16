@@ -24,7 +24,7 @@
           <td>{{ value.account_number }}</td>
           <td>{{ value.number_project }}</td>
           <td>
-            <a href="#" class="btn btn-warning" @click="edit(value.id)"
+            <a href="#" class="btn btn-warning" @click="edit(value)"
               ><i class="fa fa-edit"></i> Editar</a
             >
             <a href="#" class="btn btn-danger" @click="deleteValue(value.id)"
@@ -61,8 +61,8 @@ export default {
     async deleteValue(id) {
       this.$emit("delete", id);
     },
-    async edit(id) {
-      this.$emit("edit", id);
+    async edit(value) {
+      this.$emit("edit", value);
     },
     generateCheck(id) {
       window.open("/generateCheck/" + id);

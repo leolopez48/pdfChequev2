@@ -7,7 +7,7 @@ use App\Models\Bank;
 use App\Models\Document;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
-use Luecano\NumeroALetras\NumeroALetras;
+use App\Models\NumeroEnLetras;
 
 class CheckController extends Controller
 {
@@ -36,19 +36,17 @@ class CheckController extends Controller
     public function store(Request $request)
     {
         $lastModel = Check::latest()->first();
-        $formatter = new NumeroALetras();
 
         $check = new Check;
         $check->check_number = date('Ymd').(($lastModel == null)?1:($lastModel->id+1));
-        // $check->check_name = $request->check_name;
         $check->concept = $request->concept;
         $check->date = $request->date;
         $check->net_total = $request->net_total;
         $check->amount = $request->net_total + ($request->net_total * $request->iva) + ($request->net_total * $request->rent);
         $check->movement = $request->movement;
-        $check->total_letters = $formatter->toInvoice($request->amount, 2, 'DÓLARES', 'CENTAVOS');
+        $check->total_letters = NumeroEnLetras::convertir($check->amount, ($check->amount == 1)?"DÓLAR":"DÓLARES", false, 'CENTAVOS');
+
         $check->number_project = $request->number_project;
-        // $check->bank_id = Bank::where('account_number', $request->account_number)->first()->id;
         $check->supplier_id = Supplier::where('name_supplier', $request->check_name)->first()->id;
         $check->type_fund_id = Document::where('document_name', $request->document_name)->first()->id;
         $check->iva = $request->iva;
@@ -81,16 +79,14 @@ class CheckController extends Controller
      */
     public function update(Request $request, Check $check)
     {
-        $formatter = new NumeroALetras();
-
         $check->concept = $request->concept;
         $check->date = $request->date;
         $check->net_total = $request->net_total;
         $check->amount =  $request->net_total + ($request->net_total * $request->iva) + ($request->net_total * $request->rent);
         $check->movement = $request->movement;
-        $check->total_letters = $formatter->toMoney($request->amount, 2, 'DÓLARES', 'CENTAVOS');
+        // dd($check->amount);
+        $check->total_letters = NumeroEnLetras::convertir($check->amount, ($check->amount >= 1 || $check->amount <= 1.99)?"DÓLAR":"DÓLARES", false, 'CENTAVOS');
         $check->number_project = $request->number_project;
-        // $check->bank_id = Bank::where('account_number', $request->account_number)->first()->id;
         $check->type_fund_id = Document::where('document_name', $request->document_name)->first()->id;
         $check->iva = $request->iva;
         $check->rent = $request->rent;

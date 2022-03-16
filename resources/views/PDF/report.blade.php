@@ -63,7 +63,7 @@
         <tr>
             <td colspan="4">
                 <center>
-                    <b>Tesorería municipal de El Paraíso</b>
+                    <b>Tesorería municipal Villa El Paraíso</b>
                 </center>
             </td>
         </tr>
@@ -300,10 +300,11 @@
         </tr>
         <tr>
             <td colspan="2">
-                Recibí de la Tesorería Municipal de Villa El Paraíso, Departamento de Chalatenango, la cantidad de:
+                Recibí de la Tesorería Municipal Villa El Paraíso, Departamento de Chalatenango, la cantidad de:
                 {{ $check->total_letters }} de los Estados Unidos de América
                 (${{ number_format($check->amount, 2) }}), en concepto
-                de {{ $check->concept }}, egreso que hace la tesorería Municipal de Villa de El Paraíso de la Cuenta
+                de {{ $check->concept }}, egreso que hace la tesorería Municipal Villa El Paraíso de la
+                Cuenta
                 Corriente {{ $check->document_name }} No. {{ $check->account_number }}, {{ $check->name_bank }}
                 y descargado del Cifrado del
                 Presupuesto Municipal vigente.
@@ -311,7 +312,7 @@
         </tr>
         <tr>
             <td></td>
-            <td style="text-align: right">Villa de El Paraíso, {{ $check->dateNumberLetters }}</td>
+            <td style="text-align: right">Villa El Paraíso, {{ $check->dateNumberLetters }}</td>
         </tr>
     </table>
 
