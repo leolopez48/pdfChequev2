@@ -9,6 +9,7 @@ use App\Http\Controllers\CheckController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\BankController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +58,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/summary', function () {
         return view('summary.index');
     });
+
+    Route::get('/profile', function () {
+        return view('profile');
+    });
+
+    Route::get('/usuarioActual', [UserController::class, 'usuarioActual']);
+    Route::put('/api/user/{user}', [UserController::class, 'update']);
 });
 
 Route::post('api/student/id', [StudentController::class, 'studentByCarnet']);
