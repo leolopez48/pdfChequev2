@@ -47,7 +47,7 @@ class CheckController extends Controller
         $check->total_letters = NumeroEnLetras::convertir($check->amount, ($check->amount == 1)?"DÓLAR":"DÓLARES", false, 'CENTAVOS');
 
         $check->number_project = $request->number_project;
-        $check->supplier_id = Supplier::where('name_supplier', $request->check_name)->first()->id;
+        $check->supplier_id = Supplier::where('name_supplier', $request->name_supplier)->first()->id;
         $check->type_fund_id = Document::where('document_name', $request->document_name)->first()->id;
         $check->iva = $request->iva;
         $check->rent = $request->rent;
